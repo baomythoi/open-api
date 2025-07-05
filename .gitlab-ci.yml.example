@@ -1,0 +1,47 @@
+stages:
+  - build
+  - deploy
+
+include:
+  - project: 'sysops/cicd-templates'
+    ref: main
+    file: gitlab-ci-template-1.yml
+
+.development_ci_envs:
+  WORK_DIR: /www/wwwroot/open-api-dev.globalcare.vn
+  BUILD_PATH: acme
+  DOTENV_FILENAME: .env
+  DOMAIN: open-api-dev.globalcare.vn
+  BUILD_CMD: build
+
+.production_ci_envs:
+  WORK_DIR: /www/wwwroot/open-api.globalcare.vn
+  BUILD_PATH: acme
+  DOTENV_FILENAME: .env
+  DOMAIN: open-api.globalcare.vn
+  BUILD_CMD: build
+
+install_and_build:
+  stage: build
+  cache: !reference [.global_cache]
+  extends:
+    - .verify_env_script
+    - .process_env_script
+    - .manual_job
+  script:
+    - !reference [.install_build_backend_script]
+  tags:
+    - $BUILD_TAGS
+
+deploy_kubernetes:
+  stage: deploy
+  cache: {}
+  extends:
+    - .auto_job
+    - .process_env_script
+  script:
+    - !reference [.deploy_kubernetes_script]
+  needs:
+    - install_and_build
+  tags:
+    - $BUILD_TAGS

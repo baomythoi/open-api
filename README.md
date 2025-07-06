@@ -7,6 +7,10 @@
 - Node.js 22
 - TypeScript
 - Fastify
+- PostgreSQL
+- RabbitMQ
+- MongoDB
+- Redis
 
 ## 🚀 Cách chạy
 

@@ -16,7 +16,9 @@ export default class Channels extends BaseController {
     const result = await this.postMessages({
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.get_facebook_connect_url.routing',
-      message: {}
+      message: {
+        authentication: req.authentication
+      }
     });
 
     return result;
@@ -27,7 +29,6 @@ export default class Channels extends BaseController {
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.facebook_callback.routing',
       message: {
-        authentication: req.authentication,
         params: req.query,
       }
     });
@@ -56,7 +57,7 @@ export default class Channels extends BaseController {
       body
     };
 
-    const result = await this.postMessages({
+    await this.postMessages({
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.facebook_post_message_to_n8n.routing',
       message: {

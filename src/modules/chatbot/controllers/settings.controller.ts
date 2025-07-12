@@ -11,12 +11,35 @@ export default class Settings extends BaseController {
     super();
   }
 
-  getSettings = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+  init = async (): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.generals.init_settings.routing',
+      message: {}
+    });
+
+    return result;
+  }
+
+  get = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,
       routing: 'rpc.chatbot.generals.get_settings.routing',
       message: {
         authentication: req.authentication,
+      }
+    });
+
+    return result;
+  }
+
+  update = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.generals.update_setting.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.body,
       }
     });
 

@@ -47,21 +47,19 @@ export default class Channels extends BaseController {
   }
 
   facebookWebhook = async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
-    const body = req.body as any;
-    const headers = req.headers as any;
-    const params = req.params as any;
+    const { headers, params, body } = req;
 
-    const data = {
+    const messagePayload = {
       headers,
       params,
       body
     };
 
-    await this.postMessages({
-      exchange: this.exchange,
-      routing: 'rpc.chatbot.channels.facebook_post_message_to_n8n.routing',
+    this.pushToWorker({
+      exchange: 'worker.service.chatbot.exchange',
+      routing: 'worker.chatbot.channels.facebook_post_message_to_n8n.routing',
       message: {
-        params: { data }
+        params: { data: messagePayload }
       }
     });
 

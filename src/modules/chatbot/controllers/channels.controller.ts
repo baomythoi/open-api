@@ -81,4 +81,26 @@ export default class Channels extends BaseController {
 
     reply.code(403).type('text/html').send('Forbidden');
   };
+
+  setFacebookPageActiveStatus = async (req: FastifyRequest<{
+    Params: {
+      pageUid: string
+    },
+    Body: {
+      status: boolean
+    }
+  }>): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.channels.set_facebook_page_active_status.routing',
+      message: {
+        params: {
+          ...req.params,
+          ...req.body
+        }
+      }
+    });
+
+    return result;
+  }
 }

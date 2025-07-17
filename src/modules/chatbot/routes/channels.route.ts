@@ -43,6 +43,15 @@ const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
     handler: new ChannelsController().facebookWebhook
   });
 
+  fastify.route({
+    method: 'PATCH',
+    url: '/facebook/pages/:pageUid/status',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ChannelsController().setFacebookPageActiveStatus
+  });
+
   done();
 }
 

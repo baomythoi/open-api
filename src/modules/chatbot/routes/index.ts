@@ -9,5 +9,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: '/generals',
   });
 
+  fastify.register(import('@chatbot/routes/prompts.route'), {
+    prefix: '/prompts',
+  });
+
   done();
 };

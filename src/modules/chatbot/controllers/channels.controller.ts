@@ -103,4 +103,29 @@ export default class Channels extends BaseController {
 
     return result;
   }
+
+  updateFacebookPagePrompt = async (req: FastifyRequest<{
+    Params: {
+      pageUid: string
+    },
+    Body: {
+      promptType: 'system_prompt' | 'classify_prompt';
+      promptUid?: string;
+      customContent?: string;
+    }
+  }>): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.channels.update_facebook_page_prompt.routing',
+      message: {
+        authentication: req.authentication,
+        params: {
+          ...req.params,
+          ...req.body
+        }
+      }
+    });
+
+    return result;
+  }
 }

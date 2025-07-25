@@ -45,11 +45,20 @@ const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
 
   fastify.route({
     method: 'PATCH',
-    url: '/facebook/pages/:pageUid/status',
+    url: '/facebook/pages/:pageUid/active',
     preHandler: [
       new UserMiddleware().verifyToken,
     ],
     handler: new ChannelsController().setFacebookPageActiveStatus
+  });
+
+  fastify.route({
+    method: 'PATCH',
+    url: '/facebook/pages/:pageUid/prompt',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ChannelsController().updateFacebookPagePrompt
   });
 
   done();

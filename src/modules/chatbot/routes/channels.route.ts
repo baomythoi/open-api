@@ -9,6 +9,15 @@ import UserMiddleware from '@authentication/middlewares/user.middleware';
 const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
+    url: '/pages',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ChannelsController().getPages
+  })
+
+  fastify.route({
+    method: 'GET',
     url: '/facebook/get-url',
     preHandler: [
       new UserMiddleware().verifyToken,

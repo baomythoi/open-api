@@ -29,6 +29,15 @@ const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
   })
 
   fastify.route({
+    method: 'GET',
+    url: '/:scenarioUid',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ScenariosController().getOne
+  })
+
+  fastify.route({
     method: 'PATCH',
     url: '/:scenarioUid/active',
     preHandler: [

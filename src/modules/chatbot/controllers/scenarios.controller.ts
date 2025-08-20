@@ -11,6 +11,19 @@ export default class Prompts extends BaseController {
     super();
   }
 
+  getAll = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.scenarios.get_all.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
   create = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,

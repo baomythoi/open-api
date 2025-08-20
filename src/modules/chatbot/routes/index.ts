@@ -17,5 +17,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: '/scenarios',
   });
 
+  fastify.register(import('@chatbot/routes/templates.route'), {
+    prefix: '/templates',
+  });
+
   done();
 };

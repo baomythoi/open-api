@@ -11,6 +11,15 @@ import UserMiddleware from '@authentication/middlewares/user.middleware';
  */
 const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
+    method: 'GET',
+    url: '/',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ScenariosController().getAll
+  })
+
+  fastify.route({
     method: 'POST',
     url: '/',
     preHandler: [

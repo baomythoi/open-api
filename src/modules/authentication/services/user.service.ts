@@ -25,7 +25,7 @@ export default new class UserService extends BaseService {
     return loginResult;
   }
 
-  async verifyToken(accessToken: string): Promise<FuncResponse<{ username: string }>> {
+  async verifyToken(accessToken: string): Promise<FuncResponse<{ username: string, isAdmin?: boolean }>> {
     const message = {
       params: {
         accessToken

@@ -4,7 +4,7 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import ScenariosController from '@chatbot/controllers/scenarios.controller';
 
 // middleware
-import UserMiddleware from '@authentication/middlewares/user.middleware';
+import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
 /**
  * @route /v1/chatbot/scenarios
@@ -14,7 +14,7 @@ const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
     method: 'GET',
     url: '/',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new ScenariosController().getAll
   })
@@ -23,7 +23,7 @@ const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
     method: 'POST',
     url: '/',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new ScenariosController().create
   })
@@ -32,7 +32,7 @@ const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
     method: 'PATCH',
     url: '/:scenarioUid',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new ScenariosController().update
   })
@@ -41,7 +41,7 @@ const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
     method: 'GET',
     url: '/:scenarioUid',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new ScenariosController().getOne
   })
@@ -50,7 +50,7 @@ const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
     method: 'PATCH',
     url: '/:scenarioUid/active',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new ScenariosController().setActiveStatus
   })
@@ -59,7 +59,7 @@ const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
     method: 'PATCH',
     url: '/:scenarioUid/soft-delete',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new ScenariosController().softDelelte
   })
@@ -68,7 +68,7 @@ const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
     method: 'PATCH',
     url: '/:scenarioUid/restore',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new ScenariosController().restore
   })

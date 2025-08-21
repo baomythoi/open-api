@@ -70,6 +70,21 @@ const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
     handler: new ChannelsController().updateFacebookPagePrompt
   });
 
+  fastify.route({
+    method: 'GET',
+    url: '/zalo/get-url',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ChannelsController().getZaloConnectUrl
+  })
+
+  fastify.route({
+    method: 'GET',
+    url: '/zalo/callback',
+    handler: new ChannelsController().zaloCallback
+  });
+
   done();
 }
 

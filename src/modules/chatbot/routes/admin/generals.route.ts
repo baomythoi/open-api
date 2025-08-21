@@ -4,14 +4,14 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import SettingsController from '@chatbot/controllers/settings.controller';
 
 // middleware
-import UserMiddleware from '@authentication/middlewares/user.middleware';
+import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
 const generalsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'POST',
     url: '/settings',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new SettingsController().init
   })
@@ -20,7 +20,7 @@ const generalsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
     method: 'GET',
     url: '/settings',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new SettingsController().get
   })
@@ -29,7 +29,7 @@ const generalsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
     method: 'PATCH',
     url: '/settings',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new SettingsController().update
   })

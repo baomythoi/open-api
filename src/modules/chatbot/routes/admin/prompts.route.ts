@@ -4,14 +4,14 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import PromptsController from '@chatbot/controllers/prompts.controller';
 
 // middleware
-import UserMiddleware from '@authentication/middlewares/user.middleware';
+import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
 const promptsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new PromptsController().getAll
   })
@@ -20,7 +20,7 @@ const promptsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done
     method: 'GET',
     url: '/:promptUid',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new PromptsController().getOne
   })
@@ -29,7 +29,7 @@ const promptsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done
     method: 'POST',
     url: '/',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new PromptsController().create
   })
@@ -38,7 +38,7 @@ const promptsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done
     method: 'PATCH',
     url: '/:promptUid',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new PromptsController().update
   })
@@ -47,7 +47,7 @@ const promptsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done
     method: 'PATCH',
     url: '/:promptUid/active',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new PromptsController().setActiveStatus
   })

@@ -112,6 +112,19 @@ export default class Prompts extends BaseController {
     return result;
   }
 
+  userGetOne = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.prompts.user_get_one.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.params,
+      }
+    });
+
+    return result;
+  }
+
   userCreate = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,
@@ -124,7 +137,6 @@ export default class Prompts extends BaseController {
 
     return result;
   }
-
 
   userUpdate = async (req: FastifyRequest<{
     Params: {

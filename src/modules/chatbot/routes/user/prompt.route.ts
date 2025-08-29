@@ -17,6 +17,15 @@ const promptRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done:
   })
 
   fastify.route({
+    method: 'GET',
+    url: '/:promptUid',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new PromptsController().userGetOne
+  })
+
+  fastify.route({
     method: 'POST',
     url: '/',
     preHandler: [

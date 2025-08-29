@@ -4,7 +4,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 // interface
 import { FuncResponse } from '@interfaces/response';
 
-export default class Prompts extends BaseController {
+export default class Scenarios extends BaseController {
   protected exchange = 'rpc.service.chatbot.exchange';
 
   constructor() {
@@ -118,6 +118,92 @@ export default class Prompts extends BaseController {
       message: {
         authentication: req.authentication,
         params: req.params
+      }
+    });
+
+    return result;
+  }
+
+  userGet = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.scenarios.user_get.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  userCreate = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.scenarios.user_create.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.body,
+      }
+    });
+
+    return result;
+  }
+
+  userUpdate = async (req: FastifyRequest<{
+    Params: {
+      stepUid: string;
+    },
+    Body: {
+      question?: string;
+      answer?: string;
+    }
+  }>): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.scenarios.user_update.routing',
+      message: {
+        authentication: req.authentication,
+        params: {
+          ...req.params,
+          ...req.body,
+        },
+      }
+    });
+
+    return result;
+  }
+
+  userDelete = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.scenarios.user_delete.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.params,
+      }
+    });
+
+    return result;
+  }
+
+  userSetActive = async (req: FastifyRequest<{
+    Params: {
+      stepUid: string
+    },
+    Body: {
+      active: boolean
+    }
+  }>): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.scenarios.user_set_active.routing',
+      message: {
+        authentication: req.authentication,
+        params: {
+          ...req.params,
+          ...req.body,
+        }
       }
     });
 

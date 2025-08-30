@@ -52,6 +52,24 @@ const scenarioRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
     handler: new ScenariosController().userSetActive
   })
 
+  fastify.route({
+    method: 'POST',
+    url: '/upload',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ScenariosController().userUploadExcel
+  })
+
+  fastify.route({
+    method: 'POST',
+    url: '/uploaded-handler',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ScenariosController().userUploadedExcelHandler
+  })
+
   done();
 }
 

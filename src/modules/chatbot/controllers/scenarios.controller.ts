@@ -1,5 +1,7 @@
 import BaseController from '@core/base.controller';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyRequest } from 'fastify';
+import fs from 'fs';
+import path from 'path';
 
 // interface
 import { FuncResponse } from '@interfaces/response';
@@ -204,6 +206,71 @@ export default class Scenarios extends BaseController {
           ...req.params,
           ...req.body,
         }
+      }
+    });
+
+    return result;
+  }
+
+  userUploadExcel = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const file = await req.file();
+
+    if (!file) {
+      return {
+        statusCode: 400,
+        success: false,
+        message: 'Chưa có file upload',
+      };
+    }
+
+    if (
+      file.mimetype !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' &&
+      file.mimetype !== 'application/vnd.ms-excel'
+    ) {
+      return {
+        statusCode: 400,
+        success: false,
+        message: 'Chỉ được upload file Excel',
+      };
+    }
+
+    const ext = path.extname(file.filename);
+    const baseName = path.basename(file.filename, ext);
+    const filename = `${baseName}-${Date.now()}${ext}`;
+    const uploadDir = path.join(process.cwd(), 'uploads');
+
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+
+    const filePath = path.join(uploadDir, filename);
+
+    await new Promise((resolve, reject) => {
+      const ws = fs.createWriteStream(filePath);
+      file.file.pipe(ws);
+      ws.on('finish', resolve);
+      ws.on('error', reject);
+    });
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'Upload thành công',
+      data: {
+        originalName: file.filename,
+        savedAs: filename,
+        path: filePath,
+      },
+    };
+  };
+
+  userUploadedExcelHandler = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.scenarios.user_uploaded_excel_handler.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.body,
       }
     });
 

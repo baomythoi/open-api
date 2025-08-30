@@ -57,7 +57,7 @@ export async function buildServer() {
       fieldSize: 100, // 100 bytes- max field value size
       files: 2, // 5 files- max number of files
     },
-    attachFieldsToBody: true
+    attachFieldsToBody: false
   });
 
   fastifyInstance.register(Helmet, {

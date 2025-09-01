@@ -1,5 +1,5 @@
 import BaseController from '@core/base.controller';
-import { FastifyRequest } from 'fastify';
+import { FastifyRequest, FastifyReply } from 'fastify';
 import fs from 'fs';
 import path from 'path';
 
@@ -276,4 +276,40 @@ export default class Scenarios extends BaseController {
 
     return result;
   }
+
+  downloadTemplate = async (req: FastifyRequest, reply: FastifyReply) => {
+    const { locale } = req.query as { locale?: string };
+
+    const lang = (!locale || locale === 'en') ? 'en' : 'vi';
+
+    const templateFile = path.resolve(
+      __dirname,
+      '../../../templates/scenarios',
+      `scenario_template_${lang}.xlsx`
+    );
+
+    if (!fs.existsSync(templateFile)) {
+      return reply.code(404).send({
+        statusCode: 404,
+        success: false,
+        message: 'Template file not found',
+        data: null,
+        code: 'TEMPLATE_NOT_FOUND',
+      });
+    }
+
+    const timestamp = Math.floor(Date.now() / 1000);
+
+    reply.raw.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+    reply.raw.setHeader(
+      'Content-Disposition',
+      `attachment; filename="scenario_template_${lang}_${timestamp}.xlsx"`
+    );
+
+    fs.createReadStream(templateFile).pipe(reply.raw);
+    return reply;
+  };
 }

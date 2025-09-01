@@ -141,4 +141,40 @@ export default class Channels extends BaseController {
 
     return result;
   }
+
+  deleteFacebookPage = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.channels.delete_facebook_page.routing',
+      message: {
+        params: req.params,
+      }
+    });
+
+    return result;
+  }
+
+  getZaloConnectUrl = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.channels.get_zalo_connect_url.routing',
+      message: {
+        authentication: req.authentication
+      }
+    });
+
+    return result;
+  }
+
+  zaloCallback = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.channels.zalo_callback.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
 }

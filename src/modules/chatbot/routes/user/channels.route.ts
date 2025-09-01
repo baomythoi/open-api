@@ -71,6 +71,15 @@ const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
   });
 
   fastify.route({
+    method: 'POST',
+    url: '/facebook/pages/:pageUid/delete',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ChannelsController().deleteFacebookPage
+  });
+
+  fastify.route({
     method: 'GET',
     url: '/zalo/get-url',
     preHandler: [

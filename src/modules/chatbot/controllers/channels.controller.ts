@@ -25,6 +25,16 @@ export default class Channels extends BaseController {
     return result;
   }
 
+  getFacebookOAuthUrl = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.channels.get_facebook_login_url.routing',
+      message: {}
+    });
+
+    return result;
+  }
+
   getFacebookConnectUrl = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,

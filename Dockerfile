@@ -1,31 +1,44 @@
-# Use the official Node.js image from the Docker Hub
-FROM node:20.14.0-alpine
+# -----------------------------
+# Builder stage
+# -----------------------------
+FROM node:20.14.0-alpine AS builder
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and yarn.lock to the working directory
+# Copy package.json and yarn.lock
 COPY package.json yarn.lock ./
 
-# Install dependencies using Yarn
-RUN yarn install
+# Install dependencies
+RUN yarn install --frozen-lockfile
 
-# Copy the rest of the application code to the working directory
+# Copy source code
 COPY . .
 
-# Build the application (if needed)
-RUN yarn build
+# Clean old build + build TypeScript
+RUN yarn rimraf ./acme && yarn build
 
-# Specify the directory containing the build output (adjust as per your application)
-# ARG BUILD_DIR=./acme
 
-# Copy built files into the container
-# COPY ${BUILD_DIR} ./acme
+# -----------------------------
+# Runner stage
+# -----------------------------
+FROM node:20.14.0-alpine AS runner
 
-# Expose the port the app runs on
-ARG PORT=9000
+WORKDIR /usr/src/app
+
+# Copy only needed files
+COPY --from=builder /usr/src/app/package.json ./
+COPY --from=builder /usr/src/app/yarn.lock ./
+COPY --from=builder /usr/src/app/acme ./acme
+
+# Install only production dependencies
+RUN yarn install --frozen-lockfile --production
+
+# Set environment variables
+ARG PORT=9200
 ENV PORT=${PORT}
+
 EXPOSE ${PORT}
 
-# Define the command to run the app
+# Run app with yarn start
 CMD ["yarn", "start"]

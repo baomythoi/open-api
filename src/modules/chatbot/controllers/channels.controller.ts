@@ -164,6 +164,18 @@ export default class Channels extends BaseController {
     return result;
   }
 
+  replyFromN8n = async (req: FastifyRequest, ): Promise<FuncResponse<object>> => {
+    this.pushToWorker({
+      exchange: 'worker.service.chatbot.exchange',
+      routing: 'worker.chatbot.channels.facebook_reply_from_n8n.routing',
+      message: {
+        params: req.body
+      }
+    });
+
+    return { statusCode: 200, success: true };
+  }
+
   getZaloConnectUrl = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,

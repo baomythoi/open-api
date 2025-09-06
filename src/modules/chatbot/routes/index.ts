@@ -9,5 +9,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: '/',
   });
 
+   fastify.register(import('@chatbot/routes/uploads.route'), {
+    prefix: '/uploads',
+  });
+
   done();
 };

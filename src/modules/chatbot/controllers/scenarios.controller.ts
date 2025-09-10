@@ -237,11 +237,8 @@ export default class Scenarios extends BaseController {
     const ext = path.extname(file.filename);
     const baseName = path.basename(file.filename, ext);
     const filename = `${baseName}-${Date.now()}${ext}`;
-    const uploadDir = path.join(
-      __dirname,
-      '..', '..', '..', '..', '..',
-      'uploads', 'scenarios', req.authentication.username
-    );
+    const uploadRoot = process.env.UPLOAD_PATH || path.join(__dirname, '..', '..', '..', '..', '..', 'uploads'); 
+    const uploadDir = path.join(uploadRoot, 'scenarios', req.authentication.username);
 
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });

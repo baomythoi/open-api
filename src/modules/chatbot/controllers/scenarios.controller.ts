@@ -1,6 +1,6 @@
 import BaseController from '@core/base.controller';
-import { FastifyRequest, FastifyReply } from 'fastify';
-import fs from 'fs';
+import { FastifyRequest } from 'fastify';
+import CloudflareR2 from '@utils/cloudflare-r2';
 import path from 'path';
 
 // interface
@@ -236,27 +236,17 @@ export default class Scenarios extends BaseController {
 
     const ext = path.extname(file.filename);
     const baseName = path.basename(file.filename, ext);
-    const filename = `${baseName}-${Date.now()}${ext}`;
+    const filename = `scenarios/${req.authentication.username}/${baseName}-${Date.now()}${ext}`;
 
-    if (!process.env.UPLOAD_PATH) {
-      throw new Error('UPLOAD_PATH must be defined');
+    const result = await CloudflareR2.uploadFile(filename, file.file, file.mimetype);
+
+    if (!result.success) {
+      return {
+        statusCode: 500,
+        success: false,
+        message: result.message || 'Upload thất bại',
+      };
     }
-    
-    const uploadRoot = process.env.UPLOAD_PATH;
-    const uploadDir = path.join(uploadRoot, 'scenarios', req.authentication.username);
-
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
-    const filePath = path.join(uploadDir, filename);
-
-    await new Promise((resolve, reject) => {
-      const ws = fs.createWriteStream(filePath);
-      file.file.pipe(ws);
-      ws.on('finish', resolve);
-      ws.on('error', reject);
-    });
 
     return {
       statusCode: 200,
@@ -265,7 +255,7 @@ export default class Scenarios extends BaseController {
       data: {
         originalName: file.filename,
         savedAs: filename,
-        path: filePath,
+        url: (result.data as any).url,
       },
     };
   };

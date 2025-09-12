@@ -13,5 +13,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: '/scenario',
   });
 
+  fastify.register(import('@chatbot/routes/user/statistic.route'), {
+    prefix: '/statistic',
+  });
+
   done();
 }

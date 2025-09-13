@@ -80,7 +80,7 @@ export default class Channels extends BaseController {
 
     this.pushToWorker({
       exchange: 'worker.service.chatbot.exchange',
-      routing: 'worker.chatbot.channels.facebook_post_message_to_n8n.routing',
+      routing: 'worker.chatbot.facebook.forward_message_to_n8n.routing',
       message: {
         params: { data: messagePayload }
       }
@@ -164,10 +164,10 @@ export default class Channels extends BaseController {
     return result;
   }
 
-  replyFromN8n = async (req: FastifyRequest, ): Promise<FuncResponse<object>> => {
+  replyFromN8n = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     this.pushToWorker({
       exchange: 'worker.service.chatbot.exchange',
-      routing: 'worker.chatbot.channels.facebook_reply_from_n8n.routing',
+      routing: 'worker.chatbot.facebook.send_reply_to_user.routing',
       message: {
         params: req.body
       }

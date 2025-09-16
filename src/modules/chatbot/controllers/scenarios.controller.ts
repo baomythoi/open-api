@@ -272,4 +272,16 @@ export default class Scenarios extends BaseController {
 
     return result;
   }
+
+  userGetTemplate = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.scenarios.user_get_template.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
 }

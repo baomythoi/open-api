@@ -70,6 +70,15 @@ const scenarioRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
     handler: new ScenariosController().userUploadedExcelHandler
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/download-template',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ScenariosController().userGetTemplate
+  })
+
   done();
 }
 

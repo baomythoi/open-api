@@ -5,10 +5,6 @@ export default (fastify: FastifyInstance, options1: FastifyPluginOptions, done: 
     prefix: `/auth`,
   });
 
-  fastify.register(import('@authorization/routes'), {
-    prefix: `/permission`,
-  });
-
   fastify.register(import('@cron/routes'), {
     prefix: '/cron'
   })

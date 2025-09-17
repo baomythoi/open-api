@@ -5,40 +5,26 @@ import { CustomError } from '@errors/custom';
 import { FastifyRequest } from 'fastify';
 
 // interface
-import {
-  LoginParams
-} from '@interfaces/authentication/user';
 import { FuncResponse } from '@interfaces/response';
 
 // service
-import UserSerivce from '@authentication/services/user.service';
-import UserPortalSerivce from '@authentication/services/user-portal.service';
 
 export default class UserController extends BaseController {
+  protected exchange = 'rpc.service.chatbot.exchange';
+
   constructor() {
     super();
   }
 
-  login = async (req: FastifyRequest<{ Body: LoginParams }>): Promise<FuncResponse<object>> => {
-    let loginResult: FuncResponse<object>
-
-    try {
-      switch (req.body.clientType) {
-        case 'app':
-          loginResult = await UserSerivce.login(req.body);
-          break;
-
-        case 'portal':
-          loginResult = await UserPortalSerivce.login(req.body);
-          break;
-
-        default:
-          throw new CustomError(this.errorCodes.BAD_REQUEST)
+  profile = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.user.account.profile.routing',
+      message: {
+        authentication: req.authentication,
       }
+    })
 
-      return loginResult;
-    } catch (error: any) {
-      return this.responseError(error)
-    }
+    return result;
   }
 }

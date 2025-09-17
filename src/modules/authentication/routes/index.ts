@@ -5,9 +5,5 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: `/`,
   });
 
-  fastify.register(import('@authentication/routes/security.route'), {
-    prefix: `/security`,
-  });
-
   done();
 }

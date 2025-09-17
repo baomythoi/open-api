@@ -1,9 +1,7 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 // controller
-import UserController from '@authentication/controllers/user.controller';
 import AuthController from '@authentication/controllers/auth.controller';
-import SecurityController from '@mc/controllers/security.controller';
 
 const authRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
@@ -15,18 +13,6 @@ const authRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
     }],
     handler: new AuthController().login,
   });
-
-  fastify.route({
-    method: 'GET',
-    url: '/stime',
-    handler: new SecurityController().getSecretKey,
-  });
-
-  fastify.route({
-    method: 'POST',
-    url: '/check',
-    handler: new AuthController().checkExist
-  })
 
   fastify.route({
     method: 'POST',

@@ -17,5 +17,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: '/statistic',
   });
 
+  fastify.register(import('@authentication/routes/user.route'), {
+    prefix: `/user`,
+  });
+
   done();
 }

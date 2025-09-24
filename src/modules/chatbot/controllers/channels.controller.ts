@@ -1,6 +1,5 @@
 import BaseController from '@core/base.controller';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import crypto from 'crypto';
 
 // interface
 import { FuncResponse } from '@interfaces/response';
@@ -25,7 +24,26 @@ export default class Channels extends BaseController {
     return result;
   }
 
-  getFacebookOAuthUrl = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+  deletePage = async (req: FastifyRequest<{
+    Params: { pageUid: string }, 
+    Querystring: { platform: string },
+  }>): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.channels.delete_page.routing',
+      message: {
+        authentication: req.authentication,
+        params: {
+          ...req.params,
+          ...req.query
+        },
+      }
+    });
+
+    return result;
+  }
+
+  getFacebookOAuthUrl = async (): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.get_facebook_login_url.routing',
@@ -146,18 +164,6 @@ export default class Channels extends BaseController {
           ...req.params,
           ...req.body
         }
-      }
-    });
-
-    return result;
-  }
-
-  deleteFacebookPage = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
-    const result = await this.postMessages({
-      exchange: this.exchange,
-      routing: 'rpc.chatbot.channels.delete_facebook_page.routing',
-      message: {
-        params: req.params,
       }
     });
 

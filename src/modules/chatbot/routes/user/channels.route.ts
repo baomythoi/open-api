@@ -23,6 +23,15 @@ const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
   })
 
   fastify.route({
+    method: 'POST',
+    url: '/pages/:pageUid/delete',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ChannelsController().deletePage
+  });
+
+  fastify.route({
     method: 'GET',
     url: '/facebook/get-url',
     preHandler: [
@@ -74,15 +83,6 @@ const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
       new UserMiddleware().verifyToken,
     ],
     handler: new ChannelsController().updateFacebookPagePrompt
-  });
-
-  fastify.route({
-    method: 'POST',
-    url: '/facebook/pages/:pageUid/delete',
-    preHandler: [
-      new UserMiddleware().verifyToken,
-    ],
-    handler: new ChannelsController().deleteFacebookPage
   });
 
   fastify.route({

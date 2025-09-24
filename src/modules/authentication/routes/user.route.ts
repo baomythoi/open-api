@@ -16,6 +16,24 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
     handler: new UserController().profile
   })
 
+  fastify.route({
+    method: 'PATCH',
+    url: '/profile',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new UserController().update
+  })
+
+  fastify.route({
+    method: 'POST',
+    url: '/upload-avatar',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new UserController().uploadAvatar
+  })
+
   done();
 }
 

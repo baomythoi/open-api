@@ -81,4 +81,17 @@ export default class UserController extends BaseController {
       data: { path: filename },
     };
   };
+
+  manualAssignPackage = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.user.account.manual_assign_package.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.body,
+      }
+    })
+
+    return result;
+  }
 }

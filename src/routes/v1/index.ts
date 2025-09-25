@@ -13,5 +13,9 @@ export default (fastify: FastifyInstance, options1: FastifyPluginOptions, done: 
     prefix: '/chatbot'
   })
 
+  fastify.get('/health', async () => {
+    return { status: 'ok' };
+  });
+
   done();
 };

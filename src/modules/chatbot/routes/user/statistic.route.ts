@@ -25,6 +25,15 @@ const statisticRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
     handler: new StatisticsController().getTokenUsage
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/monthly-customer-count',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new StatisticsController().getMonthlyCustomerCount
+  })
+
   done();
 }
 

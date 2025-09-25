@@ -52,6 +52,15 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
     handler: new UserController().getUserTokenStats
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/packages',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new UserController().getUserPackages
+  })
+
   done();
 }
 

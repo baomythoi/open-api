@@ -106,4 +106,16 @@ export default class UserController extends BaseController {
 
     return result;
   }
+
+  getUserPackages = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.user.account.get_user_packages.routing',
+      message: {
+        authentication: req.authentication,
+      }
+    })
+
+    return result;
+  }
 }

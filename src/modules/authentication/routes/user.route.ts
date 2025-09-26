@@ -54,11 +54,11 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
 
   fastify.route({
     method: 'GET',
-    url: '/packages',
+    url: '/package',
     preHandler: [
       new UserMiddleware().verifyToken,
     ],
-    handler: new UserController().getUserPackages
+    handler: new UserController().getUserPackage
   })
 
   done();

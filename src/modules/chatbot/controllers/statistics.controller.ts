@@ -49,4 +49,17 @@ export default class Statistics extends BaseController {
 
     return result;
   }
+
+  getMonthlyTokenUsage = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.get_monthly_token_usage.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
 }

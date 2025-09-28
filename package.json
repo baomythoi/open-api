@@ -10,7 +10,7 @@
     "lint:fix": "eslint src --ext .ts --fix"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": "20.x"
   },
   "dependencies": {
     "@fastify/autoload": "^5.7.1",

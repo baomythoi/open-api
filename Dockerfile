@@ -35,7 +35,7 @@ COPY --from=builder /usr/src/app/acme ./acme
 RUN yarn install --frozen-lockfile --production
 
 # Set environment variables
-ARG PORT=9200
+ARG PORT=9111
 ENV PORT=${PORT}
 
 EXPOSE ${PORT}

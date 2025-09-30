@@ -58,7 +58,8 @@ export default class Channels extends BaseController {
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.get_facebook_connect_url.routing',
       message: {
-        authentication: req.authentication
+        authentication: req.authentication,
+        params: req.query,
       }
     });
 
@@ -66,7 +67,7 @@ export default class Channels extends BaseController {
   }
 
   facebookCallback = async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
-    await this.postMessages({
+    const result = await this.postMessages({
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.facebook_callback.routing',
       message: {
@@ -74,9 +75,13 @@ export default class Channels extends BaseController {
       }
     });
 
+    const redirectUrl = result.data.locale === 'vi'
+      ? `https://${process.env.PLATFORM_REDIRECT_URL}/vi/dashboard/channels`
+      : `https://${process.env.PLATFORM_REDIRECT_URL}/en/dashboard/channels`;
+
     reply
       .code(302)
-      .header('Location', process.env.PLATFORM_REDIRECT_URL)
+      .header('Location', redirectUrl)
       .type('text/html')
       .send();
   }

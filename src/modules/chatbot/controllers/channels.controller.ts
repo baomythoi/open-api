@@ -65,8 +65,8 @@ export default class Channels extends BaseController {
     return result;
   }
 
-  facebookCallback = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
-    const result = await this.postMessages({
+  facebookCallback = async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
+    await this.postMessages({
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.facebook_callback.routing',
       message: {
@@ -74,7 +74,11 @@ export default class Channels extends BaseController {
       }
     });
 
-    return result;
+    reply
+      .code(302)
+      .header('Location', process.env.PLATFORM_REDIRECT_URL)
+      .type('text/html')
+      .send();
   }
 
   registerWebhookForApp = async (): Promise<FuncResponse<object>> => {

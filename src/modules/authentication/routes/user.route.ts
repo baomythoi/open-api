@@ -61,6 +61,18 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
     handler: new UserController().getUserPackage
   })
 
+  fastify.route({
+    method: 'POST',
+    url: '/verify-otp',
+    handler: new UserController().verifyOtp
+  })
+
+  fastify.route({
+    method: 'POST',
+    url: '/resend-otp',
+    handler: new UserController().resendOTP
+  })
+
   done();
 }
 

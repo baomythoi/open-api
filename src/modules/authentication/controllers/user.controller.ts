@@ -118,4 +118,28 @@ export default class UserController extends BaseController {
 
     return result;
   }
+
+  verifyOtp = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.user.account.verify_otp.routing',
+      message: {
+        params: req.body,
+      }
+    })
+
+    return result;
+  }
+
+  resendOTP = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.user.account.resend_register_otp.routing',
+      message: {
+        params: req.body,
+      }
+    })
+
+    return result;
+  }
 }

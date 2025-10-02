@@ -16,4 +16,8 @@ export interface Authentication {
 export interface Register {
   username: string;
   password: string;
+  fullname: string;
+  phoneCode: string;
+  phoneNumber: string;
+  locale: string;
 }

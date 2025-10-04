@@ -142,4 +142,40 @@ export default class UserController extends BaseController {
 
     return result;
   }
+
+  forgetPassword = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.user.account.forget_password.routing',
+      message: {
+        params: req.body,
+      }
+    })
+
+    return result;
+  }
+
+  resetPassword = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.user.account.reset_password.routing',
+      message: {
+        params: req.body,
+      }
+    })
+
+    return result;
+  }
+
+  resendResetPasswordOTP = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.user.account.resend_reset_password_otp.routing',
+      message: {
+        params: req.body,
+      }
+    })
+
+    return result;
+  }
 }

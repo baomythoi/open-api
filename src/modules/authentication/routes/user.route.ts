@@ -73,6 +73,24 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
     handler: new UserController().resendOTP
   })
 
+  fastify.route({
+    method: 'POST',
+    url: '/password/forget',
+    handler: new UserController().forgetPassword
+  })
+
+  fastify.route({
+    method: 'POST',
+    url: '/password/reset',
+    handler: new UserController().resetPassword
+  })
+
+  fastify.route({
+    method: 'POST',
+    url: '/password/resend-otp',
+    handler: new UserController().resendResetPasswordOTP
+  })
+
   done();
 }
 

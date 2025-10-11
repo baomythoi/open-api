@@ -21,5 +21,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: `/user`,
   });
 
+  fastify.register(import('@chatbot/routes/user/notifications.route'), {
+    prefix: '/notifications',
+  });
+
   done();
 }

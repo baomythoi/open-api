@@ -75,9 +75,12 @@ export default class Channels extends BaseController {
       }
     });
 
-    const redirectUrl = result.data.locale === 'vi'
-      ? `https://${process.env.PLATFORM_REDIRECT_URL}/vi/dashboard/channels`
-      : `https://${process.env.PLATFORM_REDIRECT_URL}/en/dashboard/channels`;
+   const locale = result?.data?.locale || 'vi';
+
+    const redirectUrl =
+      locale === 'vi'
+        ? `https://${process.env.PLATFORM_REDIRECT_URL}/vi/dashboard/channels`
+        : `https://${process.env.PLATFORM_REDIRECT_URL}/en/dashboard/channels`;
 
     reply
       .code(302)

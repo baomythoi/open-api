@@ -5,5 +5,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: `/`,
   });
 
+  fastify.register(import('@authentication/routes/admin-auth.route'), {
+    prefix: `/admin`,
+  });
+
   done();
 }

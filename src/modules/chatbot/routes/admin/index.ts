@@ -13,5 +13,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: '/scenarios',
   });
 
+  fastify.register(import('@authentication/routes/user-admin.route'), {
+    prefix: `/user`,
+  });
+
   done();
 }

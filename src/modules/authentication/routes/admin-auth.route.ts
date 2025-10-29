@@ -3,7 +3,7 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 // controller
 import AdminAuthController from '@authentication/controllers/admin-auth.controller';
 
-const authRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const adminAuthRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'POST',
     url: '/token',
@@ -23,4 +23,4 @@ const authRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
   done();
 }
 
-export default authRoute;
+export default adminAuthRoute;

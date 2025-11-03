@@ -17,5 +17,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: `/user`,
   });
 
+  fastify.register(import('@chatbot/routes/admin/users.route'), {
+    prefix: `/users`,
+  });
+
   done();
 }

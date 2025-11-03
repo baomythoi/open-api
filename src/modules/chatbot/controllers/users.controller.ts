@@ -11,6 +11,16 @@ export default class Users extends BaseController {
     super();
   }
 
+  adminGetConfigs = async (): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.users.get_configs.routing',
+      message: {}
+    });
+
+    return result;
+  }
+
   adminGetList = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,
@@ -30,6 +40,18 @@ export default class Users extends BaseController {
       routing: 'rpc.chatbot.users.get_detail.routing',
       message: {
         params: req.params,
+      }
+    });
+
+    return result;
+  }
+
+  adminManualAssignPackage = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.users.manual_assign_package.routing',
+      message: {
+        params: req.body,
       }
     });
 

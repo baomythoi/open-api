@@ -35,15 +35,6 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
   })
 
   fastify.route({
-    method: 'PATCH',
-    url: '/manual-assign-package',
-    preHandler: [
-      new UserMiddleware().verifyToken,
-    ],
-    handler: new UserController().manualAssignPackage
-  })
-
-  fastify.route({
     method: 'GET',
     url: '/token-stats',
     preHandler: [

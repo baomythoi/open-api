@@ -88,7 +88,7 @@ const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
   fastify.route({
     method: 'POST',
     url: '/facebook/webhook/reply',
-    handler: new ChannelsController().replyFromN8n
+    handler: new ChannelsController().replyFromN8nToFacebook
   });
 
   fastify.route({
@@ -104,6 +104,24 @@ const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
     method: 'GET',
     url: '/zalo/callback',
     handler: new ChannelsController().zaloCallback
+  });
+
+  fastify.route({
+    method: 'GET',
+    url: '/zalo/webhook',
+    handler: new ChannelsController().verifyZaloWebhook
+  });
+
+  fastify.route({
+    method: 'POST',
+    url: '/zalo/webhook',
+    handler: new ChannelsController().zaloWebhook
+  });
+
+  fastify.route({
+    method: 'POST',
+    url: '/zalo/webhook/reply',
+    handler: new ChannelsController().replyFromN8nToZalo
   });
 
   done();

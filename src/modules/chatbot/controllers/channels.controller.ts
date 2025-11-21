@@ -182,7 +182,7 @@ export default class Channels extends BaseController {
     return result;
   }
 
-  replyFromN8n = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+  replyFromN8nToFacebook = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     this.pushToWorker({
       exchange: 'worker.service.chatbot.exchange',
       routing: 'worker.chatbot.facebook.send_reply_to_user.routing',
@@ -199,7 +199,8 @@ export default class Channels extends BaseController {
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.get_zalo_connect_url.routing',
       message: {
-        authentication: req.authentication
+        authentication: req.authentication,
+        params: req.query,
       }
     });
 
@@ -216,5 +217,42 @@ export default class Channels extends BaseController {
     });
 
     return result;
+  }
+
+  verifyZaloWebhook = async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
+    reply.code(200).type('text/html').send('OK');
+    return;
+  };
+
+  zaloWebhook = async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
+    const { headers, params, body } = req;
+
+    const messagePayload = {
+      headers,
+      params,
+      body
+    };
+
+    this.pushToWorker({
+      exchange: 'worker.service.chatbot.exchange',
+      routing: 'worker.chatbot.zalo.forward_message_to_n8n.routing',
+      message: {
+        params: { data: messagePayload }
+      }
+    });
+
+    reply.code(200).type('text/html').send('EVENT_RECEIVED');
+  };
+
+  replyFromN8nToZalo = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    this.pushToWorker({
+      exchange: 'worker.service.chatbot.exchange',
+      routing: 'worker.chatbot.zalo.send_reply_to_user.routing',
+      message: {
+        params: req.body
+      }
+    });
+
+    return { statusCode: 200, success: true };
   }
 }

@@ -43,6 +43,24 @@ const usersRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: 
     handler: new UsersController().adminManualAssignPackage
   })
 
+  fastify.route({
+    method: 'PATCH',
+    url: '/:userUid/status',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new UsersController().adminUpdateStatus
+  })
+
+  fastify.route({
+    method: 'GET',
+    url: '/:userUid/transactions',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new UsersController().adminGetUserTransactions
+  })
+
   done();
 }
 

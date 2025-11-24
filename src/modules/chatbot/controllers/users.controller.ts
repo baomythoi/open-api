@@ -57,4 +57,39 @@ export default class Users extends BaseController {
 
     return result;
   }
+
+  adminUpdateStatus = async (req: FastifyRequest<{
+    Params: {
+      userUid: string;
+    },
+    Body: {
+      status: number;
+    }
+  }>): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.users.update_status.routing',
+      message: {
+        params: {
+          ...req.params,
+          ...req.body,
+        },
+      }
+    });
+
+    return result;
+  }
+
+  adminGetUserTransactions = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.users.get_transactions.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
 }

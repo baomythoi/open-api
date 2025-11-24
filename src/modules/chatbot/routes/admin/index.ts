@@ -21,5 +21,9 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
     prefix: `/users`,
   });
 
+  fastify.register(import('@chatbot/routes/admin/packages.route'), {
+    prefix: `/packages`,
+  });
+
   done();
 }

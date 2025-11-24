@@ -75,7 +75,7 @@ export default class Channels extends BaseController {
       }
     });
 
-   const locale = result?.data?.locale || 'vi';
+    const locale = result?.data?.locale || 'vi';
 
     const redirectUrl =
       locale === 'vi'
@@ -207,7 +207,10 @@ export default class Channels extends BaseController {
     return result;
   }
 
-  zaloCallback = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+  zaloCallback = async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
+    if (process.env.NODE_ENV !== 'production')
+      reply.code(200).type('text/html').send('OK');
+
     const result = await this.postMessages({
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.zalo_callback.routing',
@@ -216,7 +219,18 @@ export default class Channels extends BaseController {
       }
     });
 
-    return result;
+    const locale = result?.data?.locale || 'vi';
+
+    const redirectUrl =
+      locale === 'vi'
+        ? `https://${process.env.PLATFORM_REDIRECT_URL}/vi/dashboard/channels`
+        : `https://${process.env.PLATFORM_REDIRECT_URL}/en/dashboard/channels`;
+
+    reply
+      .code(302)
+      .header('Location', redirectUrl)
+      .type('text/html')
+      .send();
   }
 
   verifyZaloWebhook = async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {

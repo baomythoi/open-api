@@ -9,7 +9,7 @@ import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 /**
  * @route /v1/chatbot/scenarios
  */
-const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const ScenariosRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
@@ -76,4 +76,4 @@ const scenariosRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
   done();
 }
 
-export default scenariosRoute;
+export default ScenariosRoutes;

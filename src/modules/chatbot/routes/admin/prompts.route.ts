@@ -6,7 +6,7 @@ import PromptsController from '@chatbot/controllers/prompts.controller';
 // middleware
 import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
-const promptsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const PromptsRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
@@ -55,4 +55,4 @@ const promptsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done
   done();
 }
 
-export default promptsRoute;
+export default PromptsRoutes;

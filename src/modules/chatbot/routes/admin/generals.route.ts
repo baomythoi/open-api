@@ -6,7 +6,7 @@ import SettingsController from '@chatbot/controllers/settings.controller';
 // middleware
 import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
-const generalsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const GeneralsRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'POST',
     url: '/settings',
@@ -37,4 +37,4 @@ const generalsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
   done();
 }
 
-export default generalsRoute;
+export default GeneralsRoutes;

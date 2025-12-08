@@ -1,11 +1,15 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
+// routes
+import AdminRoutes from '@chatbot/routes/admin/index';
+import UserRoutes from '@chatbot/routes/user/index';
+
 export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
-  fastify.register(import('@chatbot/routes/admin/index'), {
+  fastify.register(AdminRoutes, {
     prefix: '/admin',
   });
 
-  fastify.register(import('@chatbot/routes/user/index'), {
+  fastify.register(UserRoutes, {
     prefix: '/',
   });
 

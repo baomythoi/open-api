@@ -6,12 +6,16 @@ import ChannelsController from '@chatbot/controllers/channels.controller';
 // middleware
 import UserMiddleware from '@authentication/middlewares/user.middleware';
 
-const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
-  fastify.register(import('@chatbot/routes/user/facebook-channels.route'), {
+// routes
+import FacebookChannelsRoutes from '@chatbot/routes/user/facebook-channels.route';
+import ZaloChannelsRoutes from '@chatbot/routes/user/zalo-channels.route';
+
+const ChannelsRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+  fastify.register(FacebookChannelsRoutes, {
     prefix: '/facebook',
   });
 
-  fastify.register(import('@chatbot/routes/user/zalo-channels.route'), {
+  fastify.register(ZaloChannelsRoutes, {
     prefix: '/zalo',
   });
 
@@ -36,4 +40,4 @@ const channelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
   done();
 }
 
-export default channelsRoute;
+export default ChannelsRoutes;

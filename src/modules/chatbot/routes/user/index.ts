@@ -1,27 +1,35 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
+// routes
+import ChannelsRoutes from '@chatbot/routes/user/channels.route';
+import PromptRoutes from '@chatbot/routes/user/prompt.route';
+import ScenarioRoutes from '@chatbot/routes/user/scenario.route';
+import StatisticRoutes from '@chatbot/routes/user/statistic.route';
+import NotificationRoutes from '@chatbot/routes/user/notifications.route';
+import UserRoutes from '@authentication/routes/user.route';
+
 export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
-  fastify.register(import('@chatbot/routes/user/channels.route'), {
+  fastify.register(ChannelsRoutes, {
     prefix: '/channels',
   });
 
-  fastify.register(import('@chatbot/routes/user/prompt.route'), {
+  fastify.register(PromptRoutes, {
     prefix: '/prompt',
   });
 
-  fastify.register(import('@chatbot/routes/user/scenario.route'), {
+  fastify.register(ScenarioRoutes, {
     prefix: '/scenario',
   });
 
-  fastify.register(import('@chatbot/routes/user/statistic.route'), {
+  fastify.register(StatisticRoutes, {
     prefix: '/statistic',
   });
 
-  fastify.register(import('@authentication/routes/user.route'), {
+  fastify.register(UserRoutes, {
     prefix: `/user`,
   });
 
-  fastify.register(import('@chatbot/routes/user/notifications.route'), {
+  fastify.register(NotificationRoutes, {
     prefix: '/notifications',
   });
 

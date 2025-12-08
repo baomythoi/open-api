@@ -6,7 +6,7 @@ import ZaloChannelsController from '@chatbot/controllers/zalo-channels.controlle
 // middleware
 import UserMiddleware from '@authentication/middlewares/user.middleware';
 
-const zaloChannelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const ZaloChannelsRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/get-url',
@@ -43,4 +43,4 @@ const zaloChannelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions,
   done();
 }
 
-export default zaloChannelsRoute;
+export default ZaloChannelsRoutes;

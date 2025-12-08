@@ -6,7 +6,7 @@ import FacebookChannelsController from '@chatbot/controllers/facebook-channels.c
 // middleware
 import UserMiddleware from '@authentication/middlewares/user.middleware';
 
-const facebookChannelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const FacebookChannelsRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/oauth-url',
@@ -76,4 +76,4 @@ const facebookChannelsRoute = (fastify: FastifyInstance, opts: FastifyPluginOpti
   done();
 }
 
-export default facebookChannelsRoute;
+export default FacebookChannelsRoutes;

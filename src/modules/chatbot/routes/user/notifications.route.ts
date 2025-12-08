@@ -6,7 +6,7 @@ import NotificationsController from '@chatbot/controllers/notifications.controll
 // middleware
 import UserMiddleware from '@authentication/middlewares/user.middleware';
 
-const notificationRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const NotificationRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
@@ -46,4 +46,4 @@ const notificationRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions,
   done();
 }
 
-export default notificationRoute;
+export default NotificationRoutes;

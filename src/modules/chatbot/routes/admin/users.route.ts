@@ -6,7 +6,7 @@ import UsersController from '@chatbot/controllers/users.controller';
 // middleware
 import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
-const usersRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const UsersRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/configs',
@@ -64,4 +64,4 @@ const usersRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: 
   done();
 }
 
-export default usersRoute;
+export default UsersRoute;

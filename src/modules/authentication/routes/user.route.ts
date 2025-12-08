@@ -6,7 +6,7 @@ import UserController from '@authentication/controllers/user.controller';
 // middleware
 import UserMiddleware from '@authentication/middlewares/user.middleware';
 
-const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const UserRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/profile',
@@ -85,4 +85,4 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
   done();
 }
 
-export default userRoute;
+export default UserRoute;

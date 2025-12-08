@@ -1,40 +1,67 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 // controller
-import UsersController from '@chatbot/controllers/users.controller';
+import PackagesController from '@chatbot/controllers/packages.controller';
 
 // middleware
 import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
-const packagesRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const PackagesRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
     preHandler: [
       new AdminMiddleware().verifyToken,
     ],
-    handler: new UsersController().adminGetList
+    handler: new PackagesController().adminGetList
   })
 
   fastify.route({
     method: 'GET',
-    url: '/:userUid',
+    url: '/:packageUid',
     preHandler: [
       new AdminMiddleware().verifyToken,
     ],
-    handler: new UsersController().adminGetDetail
+    handler: new PackagesController().adminGetDetail
   });
 
   fastify.route({
-    method: 'PATCH',
-    url: '/manual-assign-package',
+    method: 'POST',
+    url: '/',
     preHandler: [
       new AdminMiddleware().verifyToken,
     ],
-    handler: new UsersController().adminManualAssignPackage
+    handler: new PackagesController().adminCreate
+  })
+
+  fastify.route({
+    method: 'PATCH',
+    url: '/:packageUid',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new PackagesController().adminUpdate
+  })
+
+  fastify.route({
+    method: 'PATCH',
+    url: '/:packageUid/status',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new PackagesController().adminUpdateStatus
+  })
+
+  fastify.route({
+    method: 'GET',
+    url: '/metrics',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new PackagesController().adminGetMetrics
   })
 
   done();
 }
 
-export default packagesRoute;
+export default PackagesRoute;

@@ -4,14 +4,14 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import UserController from '@authentication/controllers/user.controller';
 
 // middleware
-import UserMiddleware from '@authentication/middlewares/user.middleware';
+import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
-const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const UserAdminRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/profile',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new UserController().profile
   })
@@ -20,7 +20,7 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
     method: 'PATCH',
     url: '/profile',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new UserController().update
   })
@@ -29,7 +29,7 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
     method: 'POST',
     url: '/upload-avatar',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new UserController().uploadAvatar
   })
@@ -38,7 +38,7 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
     method: 'GET',
     url: '/token-stats',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new UserController().getUserTokenStats
   })
@@ -47,7 +47,7 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
     method: 'GET',
     url: '/package',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
     handler: new UserController().getUserPackage
   })
@@ -85,4 +85,4 @@ const userRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: (
   done();
 }
 
-export default userRoute;
+export default UserAdminRoutes;

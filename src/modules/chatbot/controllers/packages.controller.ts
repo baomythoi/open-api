@@ -110,4 +110,16 @@ export default class PackagesController extends BaseController {
 
     return result;
   }
+
+  adminDelete = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.packages.delete.routing',
+      message: {
+        params: req.params,
+      }
+    });
+
+    return result;
+  }
 }

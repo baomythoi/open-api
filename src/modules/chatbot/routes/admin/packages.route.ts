@@ -61,6 +61,15 @@ const PackagesRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
     handler: new PackagesController().adminGetMetrics
   })
 
+  fastify.route({
+    method: 'POST',
+    url: '/:packageUid/delete',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new PackagesController().adminDelete
+  })
+
   done();
 }
 

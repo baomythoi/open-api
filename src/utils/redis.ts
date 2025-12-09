@@ -1,3 +1,4 @@
+import BaseCommon from '@core/base.common';
 import { createClient } from 'redis';
 
 /* eslint-disable no-console */
@@ -26,15 +27,15 @@ export default new class RedisService {
 
       // Log Redis client connection success
       this.redisClient.on('connect', () => {
-        console.info('Redis client connected');
+        BaseCommon.logger.info('Redis client connected ✓');
       });
 
       // Log Redis client connection error
       this.redisClient.on('error', (error) => {
-        console.error(`Redis connection error: ${error?.message}`);
+        BaseCommon.logger.error(`Redis connection error ✘: ${error?.message}`);
       });
     } catch (error: any) {
-      console.error(`Failed to connect to Redis: ${error?.message}`);
+      BaseCommon.logger.error(`Failed to connect to Redis ✘: ${error?.message}`);
       setTimeout(() => this.connect(), 5000); // Retry connection
     }
   }

@@ -6,7 +6,14 @@ import PromptTemplatesController from '@chatbot/controllers/prompt-templates.con
 // middleware
 import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
+// routes
+import PromptTemplateCategoriesRoutes from '@chatbot/routes/admin/prompt-template-categories.route';
+
 const PromptTemplatesRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+  fastify.register(PromptTemplateCategoriesRoutes, {
+    prefix: '/categories',
+  });
+
   fastify.route({
     method: 'GET',
     url: '/',

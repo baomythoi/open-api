@@ -49,4 +49,28 @@ export default class ConversationController extends BaseController {
 
     return result;
   }
+
+  getMessages = async (req: FastifyRequest<{
+    Params: {
+      conversationUid: string
+    },
+    Querystring: {
+      page: number,
+      pageSize: number,
+    },
+  }>): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.conversations.get_messages.routing',
+      message: {
+        authentication: req.authentication,
+        params: {
+          ...req.query,
+          ...req.params,
+        }
+      }
+    });
+
+    return result;
+  }
 }

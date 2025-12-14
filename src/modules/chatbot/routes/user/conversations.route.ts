@@ -34,6 +34,15 @@ const ConversationRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions
     handler: new ConversationController().manualEndConversation
   });
 
+  fastify.route({
+    method: 'GET',
+    url: '/:conversationUid/messages',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ConversationController().getMessages
+  });
+
   done();
 }
 

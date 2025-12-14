@@ -7,6 +7,7 @@ import ScenarioRoutes from '@chatbot/routes/user/scenario.route';
 import StatisticRoutes from '@chatbot/routes/user/statistic.route';
 import NotificationRoutes from '@chatbot/routes/user/notifications.route';
 import UserRoutes from '@authentication/routes/user.route';
+import ConversationRoutes from '@chatbot/routes/user/conversations.route';
 
 export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.register(ChannelsRoutes, {
@@ -31,6 +32,10 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
 
   fastify.register(NotificationRoutes, {
     prefix: '/notifications',
+  });
+
+  fastify.register(ConversationRoutes, {
+    prefix: '/conversations',
   });
 
   done();

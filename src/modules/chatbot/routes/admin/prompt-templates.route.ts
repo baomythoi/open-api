@@ -16,6 +16,15 @@ const PromptTemplatesRoutes = (fastify: FastifyInstance, opts: FastifyPluginOpti
 
   fastify.route({
     method: 'GET',
+    url: '/configs',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new PromptTemplatesController().getConfigs
+  })
+
+  fastify.route({
+    method: 'GET',
     url: '/',
     preHandler: [
       new AdminMiddleware().verifyToken,

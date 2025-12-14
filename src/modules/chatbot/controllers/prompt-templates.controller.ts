@@ -11,6 +11,16 @@ export default class PromptTemplates extends BaseController {
     super();
   }
 
+  getConfigs = async (): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.prompt_templates.get_configs.routing',
+      message: {}
+    });
+
+    return result;
+  }
+
   getList = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,

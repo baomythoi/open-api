@@ -6,7 +6,7 @@ import StatisticsController from '@chatbot/controllers/statistics.controller';
 // middleware
 import UserMiddleware from '@authentication/middlewares/user.middleware';
 
-const statisticRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const StatisticRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/recent-customers',
@@ -46,4 +46,4 @@ const statisticRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
   done();
 }
 
-export default statisticRoute;
+export default StatisticRoutes;

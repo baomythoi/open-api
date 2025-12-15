@@ -4,7 +4,7 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { FuncResponse } from '@interfaces/response';
 
 // service
-import UserSerivce from '@authentication/services/user.service';
+import UserService from '@authentication/services/user.service';
 
 export default class AdminMidleware {
   verifyToken = async (req: FastifyRequest, reply: FastifyReply): Promise<FuncResponse<object>> => {
@@ -19,14 +19,18 @@ export default class AdminMidleware {
 
     const accessToken = bearerToken.split(' ')[1];
 
-    const verifyTokenResult = await UserSerivce.verifyToken(accessToken);
+    const verifyTokenResult = await UserService.verifyToken(accessToken);
 
-    if (
-      !verifyTokenResult.success ||
-      !verifyTokenResult.data || 
-      verifyTokenResult.data.isAdmin === false
-    )
+    if (!verifyTokenResult.success || !verifyTokenResult.data) {
       return reply.code(401).send(verifyTokenResult);
+    } else if (verifyTokenResult.data.isAdmin === false) {
+      return reply.code(403).send({
+        statusCode: 401,
+        success: false,
+        code: 'authorization_token_is_null',
+        message: 'Không lấy được thông tin Authorization'
+      });
+    };
 
     req.authentication.username = verifyTokenResult.data.username;
 
@@ -45,7 +49,7 @@ export default class AdminMidleware {
 
     const accessToken = bearerToken.split(' ')[1];
 
-    const verifyResult = await UserSerivce.verify(accessToken);
+    const verifyResult = await UserService.verify(accessToken);
     if (!verifyResult.success || !verifyResult.data)
       return reply.code(401).send(verifyResult);
 

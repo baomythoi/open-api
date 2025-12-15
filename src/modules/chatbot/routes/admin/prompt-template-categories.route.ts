@@ -1,29 +1,29 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 // controller
-import PackagesController from '@chatbot/controllers/packages.controller';
+import TemplateCategoriesController from '@chatbot/controllers/prompt-template-categories.controller';
 
 // middleware
 import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
-const PackagesRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const PromptTemplateCategoriesRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
     preHandler: [
       new AdminMiddleware().verifyToken,
     ],
-    handler: new PackagesController().adminGetList
+    handler: new TemplateCategoriesController().getList
   })
 
   fastify.route({
     method: 'GET',
-    url: '/:packageUid',
+    url: '/:categoryUid',
     preHandler: [
       new AdminMiddleware().verifyToken,
     ],
-    handler: new PackagesController().adminGetDetail
-  });
+    handler: new TemplateCategoriesController().getDetail
+  })
 
   fastify.route({
     method: 'POST',
@@ -31,46 +31,46 @@ const PackagesRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
     preHandler: [
       new AdminMiddleware().verifyToken,
     ],
-    handler: new PackagesController().adminCreate
+    handler: new TemplateCategoriesController().create
   })
 
   fastify.route({
     method: 'PATCH',
-    url: '/:packageUid',
+    url: '/:categoryUid',
     preHandler: [
       new AdminMiddleware().verifyToken,
     ],
-    handler: new PackagesController().adminUpdate
+    handler: new TemplateCategoriesController().update
   })
 
   fastify.route({
     method: 'PATCH',
-    url: '/:packageUid/status',
+    url: '/:categoryUid/status',
     preHandler: [
       new AdminMiddleware().verifyToken,
     ],
-    handler: new PackagesController().adminUpdateStatus
-  })
-
-  fastify.route({
-    method: 'GET',
-    url: '/metrics',
-    preHandler: [
-      new AdminMiddleware().verifyToken,
-    ],
-    handler: new PackagesController().adminGetMetrics
+    handler: new TemplateCategoriesController().setStatus
   })
 
   fastify.route({
     method: 'POST',
-    url: '/:packageUid/delete',
+    url: '/:categoryUid/delete',
     preHandler: [
       new AdminMiddleware().verifyToken,
     ],
-    handler: new PackagesController().adminDelete
+    handler: new TemplateCategoriesController().delete
+  })
+
+  fastify.route({
+    method: 'GET',
+    url: '/active',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new TemplateCategoriesController().getAllActiveCategories
   })
 
   done();
 }
 
-export default PackagesRoute;
+export default PromptTemplateCategoriesRoutes;

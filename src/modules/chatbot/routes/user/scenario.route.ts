@@ -6,7 +6,7 @@ import ScenariosController from '@chatbot/controllers/scenarios.controller';
 // middleware
 import UserMiddleware from '@authentication/middlewares/user.middleware';
 
-const scenarioRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const ScenarioRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
@@ -82,4 +82,4 @@ const scenarioRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
   done();
 }
 
-export default scenarioRoute;
+export default ScenarioRoutes;

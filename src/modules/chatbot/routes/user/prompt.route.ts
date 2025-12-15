@@ -2,11 +2,12 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 // controller
 import PromptsController from '@chatbot/controllers/prompts.controller';
+import PromptTemplatesController from '@chatbot/controllers/prompt-templates.controller';
 
 // middleware
 import UserMiddleware from '@authentication/middlewares/user.middleware';
 
-const promptRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const PromptRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
@@ -52,7 +53,16 @@ const promptRoute = (fastify: FastifyInstance, opts: FastifyPluginOptions, done:
     handler: new PromptsController().userDelete
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/featured-templates',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new PromptTemplatesController().getFeaturedList
+  })
+
   done();
 }
 
-export default promptRoute;
+export default PromptRoutes;

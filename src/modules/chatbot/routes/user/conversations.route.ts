@@ -1,49 +1,49 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 // controller
-import NotificationsController from '@chatbot/controllers/notifications.controller';
+import ConversationController from '@chatbot/controllers/conversations.controller';
 
 // middleware
 import UserMiddleware from '@authentication/middlewares/user.middleware';
 
-const NotificationRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
+const ConversationRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
     preHandler: [
       new UserMiddleware().verifyToken,
     ],
-    handler: new NotificationsController().userGetList
+    handler: new ConversationController().getList
   })
 
   fastify.route({
     method: 'GET',
-    url: '/:notificationUid',
+    url: '/:conversationUid',
     preHandler: [
       new UserMiddleware().verifyToken,
     ],
-    handler: new NotificationsController().userGetDetail
+    handler: new ConversationController().getDetail
   })
 
   fastify.route({
     method: 'PATCH',
-    url: '/:notificationUid/read',
+    url: '/:conversationUid/end',
     preHandler: [
       new UserMiddleware().verifyToken,
     ],
-    handler: new NotificationsController().userRead
-  })
+    handler: new ConversationController().manualEndConversation
+  });
 
   fastify.route({
-    method: 'PATCH',
-    url: '/read/all',
+    method: 'GET',
+    url: '/:conversationUid/messages',
     preHandler: [
       new UserMiddleware().verifyToken,
     ],
-    handler: new NotificationsController().userReadAll
-  })
+    handler: new ConversationController().getMessages
+  });
 
   done();
 }
 
-export default NotificationRoutes;
+export default ConversationRoutes;

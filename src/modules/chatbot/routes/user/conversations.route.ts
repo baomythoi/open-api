@@ -43,6 +43,15 @@ const ConversationRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions
     handler: new ConversationController().getMessages
   });
 
+  fastify.route({
+    method: 'GET',
+    url: '/stats',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ConversationController().getStats
+  });
+
   done();
 }
 

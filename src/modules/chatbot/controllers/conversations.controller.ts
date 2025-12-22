@@ -73,4 +73,16 @@ export default class ConversationController extends BaseController {
 
     return result;
   }
+
+  getStats = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.conversations.get_stats.routing',
+      message: {
+        authentication: req.authentication,
+      }
+    });
+
+    return result;
+  }
 }

@@ -52,6 +52,15 @@ const StatisticRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, d
     handler: new StatisticsController().getMonthlyConversations
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/conversation-chart',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new StatisticsController().getConversationChart
+  })
+
   done();
 }
 

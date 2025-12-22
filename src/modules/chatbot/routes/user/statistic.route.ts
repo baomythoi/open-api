@@ -22,7 +22,7 @@ const StatisticRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, d
     preHandler: [
       new UserMiddleware().verifyToken,
     ],
-    handler: new StatisticsController().getTokenUsage
+    handler: new StatisticsController().getTokenUsageChart
   })
 
   fastify.route({

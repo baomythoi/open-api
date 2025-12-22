@@ -43,6 +43,15 @@ const StatisticRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, d
     handler: new StatisticsController().getMonthlyTokenUsage
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/monthly-conversations',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new StatisticsController().getMonthlyConversations
+  })
+
   done();
 }
 

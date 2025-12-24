@@ -150,4 +150,16 @@ export default class Statistics extends BaseController {
 
     return result;
   }
+
+  adminGetTotalExpiredUsersCount = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_total_expired_users.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
 }

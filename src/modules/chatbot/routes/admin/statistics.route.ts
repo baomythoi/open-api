@@ -52,6 +52,15 @@ const StatisticRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, d
     handler: new StatisticsController().adminGetTotalUsersCount
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/total-expired-users',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new StatisticsController().adminGetTotalExpiredUsersCount
+  })
+
   done();
 }
 

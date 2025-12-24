@@ -43,6 +43,15 @@ const StatisticRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, d
     handler: new StatisticsController().adminGetConversationChart
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/total-users',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new StatisticsController().adminGetTotalUsersCount
+  })
+
   done();
 }
 

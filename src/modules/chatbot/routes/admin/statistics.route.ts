@@ -88,6 +88,15 @@ const StatisticRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, d
     handler: new StatisticsController().adminGetTopExpiringUsers
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/total-users-by-package-chart',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new StatisticsController().adminGetUsersWithPackageChart
+  })
+
   done();
 }
 

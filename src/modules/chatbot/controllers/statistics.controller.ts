@@ -218,4 +218,16 @@ export default class Statistics extends BaseController {
 
     return result;
   }
+
+  adminGetMonthlyRevenueChart = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_monthly_revenue_chart.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
 }

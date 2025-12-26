@@ -106,6 +106,15 @@ const StatisticRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, d
     handler: new StatisticsController().adminGetUsersGrowthChart
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/monthly-revenue-chart',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new StatisticsController().adminGetMonthlyRevenueChart
+  }),
+
   done();
 }
 

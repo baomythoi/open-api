@@ -174,4 +174,24 @@ export default class Statistics extends BaseController {
 
     return result;
   }
+
+  adminGetLatestUsers = async (): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_latest_users.routing',
+      message: {}
+    });
+
+    return result;
+  }
+
+  adminGetTopExpiringUsers = async (): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_top_expiring_users.routing',
+      message: {}
+    });
+
+    return result;
+  }
 }

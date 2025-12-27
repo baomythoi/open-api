@@ -62,4 +62,14 @@ export default class Statistics extends BaseController {
 
     return result;
   }
+
+  adminGetStats = async (): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.feedbacks.admin_get_stats.routing',
+      message: {}
+    });
+
+    return result;
+  }
 }

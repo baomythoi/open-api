@@ -25,6 +25,15 @@ const FeedbackRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, do
     handler: new FeedbacksController().adminGetConfigs
   })
 
+  fastify.route({
+    method: 'GET',
+    url: '/stats',
+    preHandler: [
+      new AdminMiddleware().verifyToken,
+    ],
+    handler: new FeedbacksController().adminGetStats
+  })
+
   done();
 }
 

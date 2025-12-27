@@ -8,6 +8,7 @@ import PackagesRoutes from '@chatbot/routes/admin/packages.route';
 import PromptTemplatesRoutes from '@chatbot/routes/admin/prompt-templates.route';
 import ConversationRoutes from '@chatbot/routes/admin/conversations.route';
 import StatisticRoutes from '@chatbot/routes/admin/statistics.route';
+import FeedbackRoutes from '@chatbot/routes/admin/feedbacks.route';
 
 export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.register(GeneralsRoutes, {
@@ -36,6 +37,10 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
 
   fastify.register(StatisticRoutes, {
     prefix: `/statistics`,
+  });
+
+  fastify.register(FeedbackRoutes, {
+    prefix: `/feedbacks`,
   });
 
   done();

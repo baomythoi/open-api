@@ -36,4 +36,30 @@ export default class Statistics extends BaseController {
 
     return result;
   }
+
+  // admin controllers
+  adminGetConfigs = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.feedbacks.admin_get_configs.routing',
+      message: {
+        authentication: req.authentication,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetList = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.feedbacks.admin_get_list.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
 }

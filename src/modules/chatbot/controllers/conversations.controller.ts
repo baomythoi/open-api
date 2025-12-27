@@ -11,6 +11,7 @@ export default class ConversationController extends BaseController {
     super();
   }
 
+  // User Controllers
   getList = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,
@@ -69,6 +70,76 @@ export default class ConversationController extends BaseController {
           ...req.params,
         }
       }
+    });
+
+    return result;
+  }
+
+  getStats = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.conversations.get_stats.routing',
+      message: {
+        authentication: req.authentication,
+      }
+    });
+
+    return result;
+  }
+
+  // Admin Controllers
+  adminGetList = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.conversations.admin_get_list.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetDetail = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.conversations.admin_get_detail.routing',
+      message: {
+        params: req.params,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetMessages = async (req: FastifyRequest<{
+    Params: {
+      conversationUid: string
+    },
+    Querystring: {
+      page: number,
+      pageSize: number,
+    },
+  }>): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.conversations.admin_get_messages.routing',
+      message: {
+        params: {
+          ...req.query,
+          ...req.params,
+        }
+      }
+    });
+
+    return result;
+  }
+
+  adminGetStats = async (): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.conversations.admin_get_stats.routing',
+      message: {}
     });
 
     return result;

@@ -4,52 +4,43 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import ConversationController from '@chatbot/controllers/conversations.controller';
 
 // middleware
-import UserMiddleware from '@authentication/middlewares/user.middleware';
+import AdminMiddleware from '@authentication/middlewares/admin.middleware';
 
 const ConversationRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.route({
     method: 'GET',
     url: '/',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
-    handler: new ConversationController().getList
+    handler: new ConversationController().adminGetList
   })
 
   fastify.route({
     method: 'GET',
     url: '/:conversationUid',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
-    handler: new ConversationController().getDetail
+    handler: new ConversationController().adminGetDetail
   })
-
-  fastify.route({
-    method: 'PATCH',
-    url: '/:conversationUid/end',
-    preHandler: [
-      new UserMiddleware().verifyToken,
-    ],
-    handler: new ConversationController().manualEndConversation
-  });
 
   fastify.route({
     method: 'GET',
     url: '/:conversationUid/messages',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
-    handler: new ConversationController().getMessages
+    handler: new ConversationController().adminGetMessages
   });
 
   fastify.route({
     method: 'GET',
     url: '/stats',
     preHandler: [
-      new UserMiddleware().verifyToken,
+      new AdminMiddleware().verifyToken,
     ],
-    handler: new ConversationController().getStats
+    handler: new ConversationController().adminGetStats
   });
 
   done();

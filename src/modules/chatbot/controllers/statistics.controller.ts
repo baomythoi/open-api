@@ -11,6 +11,7 @@ export default class Statistics extends BaseController {
     super();
   }
 
+  // User controllers
   getRecentCustomers = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,
@@ -24,10 +25,10 @@ export default class Statistics extends BaseController {
     return result;
   }
 
-  getTokenUsage = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+  getTokenUsageChart = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
     const result = await this.postMessages({
       exchange: this.exchange,
-      routing: 'rpc.chatbot.statistics.get_token_usage.routing',
+      routing: 'rpc.chatbot.statistics.get_token_usage_chart.routing',
       message: {
         authentication: req.authentication,
         params: req.query,
@@ -56,6 +57,173 @@ export default class Statistics extends BaseController {
       routing: 'rpc.chatbot.statistics.get_monthly_token_usage.routing',
       message: {
         authentication: req.authentication,
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  getMonthlyConversations = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.get_monthly_conversations.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  getConversationChart = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.get_conversation_chart.routing',
+      message: {
+        authentication: req.authentication,
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  // Admin controllers
+  adminGetTokenUsageChart = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_token_usage_chart.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetMonthlyTokenUsage = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_monthly_token_usage.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetMonthlyConversations = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_monthly_conversations.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetConversationChart = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_conversation_chart.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetTotalUsersCount = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_total_users.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetTotalExpiredUsersCount = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_total_expired_users.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetTotalActiveUsersCount = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_total_active_users.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetLatestUsers = async (): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_latest_users.routing',
+      message: {}
+    });
+
+    return result;
+  }
+
+  adminGetTopExpiringUsers = async (): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_top_expiring_users.routing',
+      message: {}
+    });
+
+    return result;
+  }
+
+  adminGetUsersWithPackageChart = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_users_count_by_package_chart.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetUsersGrowthChart = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_users_growth_chart.routing',
+      message: {
+        params: req.query,
+      }
+    });
+
+    return result;
+  }
+
+  adminGetMonthlyRevenueChart = async (req: FastifyRequest): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.statistics.admin_get_monthly_revenue_chart.routing',
+      message: {
         params: req.query,
       }
     });

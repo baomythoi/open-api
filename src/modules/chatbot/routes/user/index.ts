@@ -8,6 +8,7 @@ import StatisticRoutes from '@chatbot/routes/user/statistic.route';
 import NotificationRoutes from '@chatbot/routes/user/notifications.route';
 import UserRoutes from '@authentication/routes/user.route';
 import ConversationRoutes from '@chatbot/routes/user/conversations.route';
+import FeedbackRoutes from '@chatbot/routes/user/feedbacks.route';
 
 export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
   fastify.register(ChannelsRoutes, {
@@ -36,6 +37,10 @@ export default (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () =
 
   fastify.register(ConversationRoutes, {
     prefix: '/conversations',
+  });
+
+  fastify.register(FeedbackRoutes, {
+    prefix: '/feedbacks',
   });
 
   done();

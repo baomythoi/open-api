@@ -25,9 +25,6 @@ export default class ZaloChannels extends BaseController {
   }
 
   zaloCallback = async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
-    if (process.env.NODE_ENV !== 'production')
-      reply.code(200).type('text/html').send('OK');
-
     const result = await this.postMessages({
       exchange: this.exchange,
       routing: 'rpc.chatbot.channels.zalo_callback.routing',

@@ -40,6 +40,15 @@ const ZaloChannelsRoutes = (fastify: FastifyInstance, opts: FastifyPluginOptions
     handler: new ZaloChannelsController().replyFromN8nToZalo
   });
 
+  fastify.route({
+    method: 'PATCH',
+    url: '/oas/:oaUid/active',
+    preHandler: [
+      new UserMiddleware().verifyToken,
+    ],
+    handler: new ZaloChannelsController().setZaloOAActiveStatus
+  });
+
   done();
 }
 

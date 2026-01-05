@@ -85,5 +85,28 @@ export default class ZaloChannels extends BaseController {
     });
 
     return { statusCode: 200, success: true };
+  };
+
+  setZaloOAActiveStatus = async (req: FastifyRequest<{
+    Params: {
+      oaUid: string
+    },
+    Body: {
+      status: boolean
+    }
+  }>): Promise<FuncResponse<object>> => {
+    const result = await this.postMessages({
+      exchange: this.exchange,
+      routing: 'rpc.chatbot.channels.set_zalo_oa_active_status.routing',
+      message: {
+        authentication: req.authentication,
+        params: {
+          ...req.params,
+          ...req.body
+        }
+      }
+    });
+
+    return result;
   }
 }
